@@ -1,0 +1,55 @@
+<title>To Do List Application</title>
+<link rel="stylesheet" href="jquery-ui.css">
+<script src="jquery.js"></script>
+<script src="jquery-ui.js"></script>
+<script>
+<style>
+  #container
+  { 
+    width:700px;
+    height:450px;
+    margin:70px auto;
+    border: 2px solidrgb(125, 181, 66);
+  }
+  h2 {
+       color:rgb(125, 181, 66);
+       text-align: center;
+      }
+  #projects
+  {
+      width: 650px;
+      height: 250px;
+      margin: 0px auto;
+   }
+   ol li {
+      border:1px dotted black;
+      
+   
+  $(document).ready(function(){
+    $("#deliverables").tabs();
+    $("ul").sortable({axis:"x", containment: "#deliverables"});
+    $("ol").sortable({axis:"y", containment: "#deliverables"});
+    $("btnAddAssignment").button()
+    .click(function() {
+      $(#deliverable-dialog").dialog({width:400, resizable:false, modal:true,
+          buttons:{
+            "Add new deliverable":function(){
+                var deliverableName = $("#new-deliverable").val();
+                $("<li><a href="#modTasks>Modify Tasks</a></li>")
+  });
+</script>
+</head>
+<body>
+  <div id="container">
+    <h2>To Do List</h2>
+    <div id="deliverables">
+      <ul id="main">
+        <li><a href="#addTasks">Add Tasks</a></li>
+        <li><a href="#modTasks">Modify Tasks</a></li>
+      </ul>
+      <ol id="addTasks">
+        <li><input type="checkbox">Add Assignments</li>
+      </ol>
+</body>
+</html>
+
