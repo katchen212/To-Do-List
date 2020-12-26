@@ -2,7 +2,6 @@
 <link rel="stylesheet" href="jquery-ui.css">
 <script src="jquery.js"></script>
 <script src="jquery-ui.js"></script>
-<script>
 <style>
   #container
   { 
@@ -15,7 +14,7 @@
        color:rgb(125, 181, 66);
        text-align: center;
       }
-  #projects
+  #deliverables
   {
       width: 650px;
       height: 250px;
@@ -23,33 +22,99 @@
    }
    ol li {
       border:1px dotted black;
-      
+      cursor:pointer;
+      padding:5px;
+      margin-bottom:5px;
+   }
+   ol li:hover {
+     background:#6eb7d6;
+  }
+  
+  #btnAddTask {
+      margin-left: 540px;
+      margin-top: 20px;
+  }
+  
+  #btnAddDeliverable {
+      margin-left: 540px;
+      margin-top: 20px;
+  }
+  
+</style>
+<script>
    
   $(document).ready(function(){
-    $("#deliverables").tabs();
+    $("#tasks").tabs();
     $("ul").sortable({axis:"x", containment: "#deliverables"});
     $("ol").sortable({axis:"y", containment: "#deliverables"});
-    $("btnAddAssignment").button()
+    
+    $("btnAddDeliverable").button();
+    .click(function(){
+      $("#deliverable-dialog").dialog({width:400, resizable:false, modal:true,
+         buttons:{
+           "Add new deliverable": function(){
+              $("#tasks").tabs("refresh");
+              var activeTab = $("#tasks").tabs("option", "active"); 
+              $("#new-deliverable").val("");
+              $(this).dialog("close");
+           },
+           "Cancel":function(){
+             $("new-deliverable").val("");
+             $(this).dialog("close");                
+       });
+    });
+    $("btnAddTask").button();
     .click(function() {
-      $(#deliverable-dialog").dialog({width:400, resizable:false, modal:true,
+      $(#task-dialog").dialog({width:400, resizable:false, modal:true,
           buttons:{
-            "Add new deliverable":function(){
-                var deliverableName = $("#new-deliverable").val();
-                $("<li><a href="#modTasks>Modify Tasks</a></li>")
+            "Add new task" :function(){
+                var taskName = $("#new-task").val();
+                $("<li><a href='#" + taskName + "'>" + taskName + "</a></li>")
+                .appendTo("#main");
+                $("<ol id='" + taskName + "'></ol>").appendTo(#"tasks");
+                $("#tasks").tabs("refresh");
+                var tabCount = $("#tasks .ui-tabs-nav li").length;
+                $("#tasks").tabs("option", "active", tabCount-1);
+                $("#new-task").val("");
+                $(this).dialog("close");
+           },
+            "Cancel":function(){
+              $("#new-task").val("");
+              $(this).dialog("close");
+            }
   });
 </script>
 </head>
 <body>
   <div id="container">
     <h2>To Do List</h2>
+    <button id="btnAddTask"</button>
+    {
+      margin-left: 550px;
+    }
     <div id="deliverables">
       <ul id="main">
         <li><a href="#addTasks">Add Tasks</a></li>
         <li><a href="#modTasks">Modify Tasks</a></li>
       </ul>
       <ol id="addTasks">
-        <li><input type="checkbox">Add Assignments</li>
+        <li><input type="checkbox">Add Deliverable</li>
+        <li><input type="checkbox">Take Quiz</li>
       </ol>
+      <ol id="modTasks">
+        <li><input type="checkbox">Complete Labs</li>
+        <li><input type="checkbox">Complete CodeLabs</li>
+        <li><input type="checkbox">Complete PluralSight Courses</li>
+      </ol>
+    </div>
+    <button id="btnAddDeliverable">Add Deliverable</button>
+    <div id="task-dialog" title="Add a task" style="display:none;">
+      <label for"new-task">Task name:</label><input id="task" type="text"/>
+    </div>
+     <div id="deliverable-dialog" title="Add a deliverable" style="display:none;">
+      <label for"new-deliverable">Deliverable name:</label><input id="deliverable" type="text"/>
+    </div>
+
 </body>
 </html>
 
