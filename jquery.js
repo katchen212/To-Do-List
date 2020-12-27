@@ -15,3 +15,4 @@
       $(id).remove();
       $("#tasks").tabs("refresh");
     });
+   });
