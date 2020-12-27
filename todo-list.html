@@ -40,14 +40,32 @@
       margin-top: 20px;
   }
   
+  .ui-icon-close
+  {
+    transform: scale(1.5);
+    cursor: pointer;
+  }
+  
 </style>
 <script>
    
   $(document).ready(function(){
+    $("input[type=checkbox]").removeAttr("checked");
     $("#tasks").tabs();
     $("ul").sortable({axis:"x", containment: "#deliverables"});
     $("ol").sortable({axis:"y", containment: "#deliverables"});
-    
+    $("#tasks").on("click", "input[type=checkbox]", function(){
+      $(this).closest("li").slideUp(function(){
+          $(this).remove();
+      });
+    });
+    $("#tasks").on("click", "span.ui-icon-close", function(){
+      var index = $(this).closest("li").index();
+      var id = $(#main li:eq(" + index + ") a").attr("href");
+      $("#main li:eq(" + index + ")".remove();
+      $(id).remove();
+      $("#tasks").tabs("refresh");
+    });
     $("btnAddDeliverable").button();
     .click(function(){
       $("#deliverable-dialog").dialog({width:400, resizable:false, modal:true,
@@ -55,7 +73,9 @@
            "Add new deliverable": function(){
               $("#tasks").tabs("refresh");
               var activeTab = $("#tasks").tabs("option", "active"); 
-              $("#new-deliverable").val("");
+              var title = $("#main > li:nth-child(" + (activeTab +1) +") > a").attr("href");
+              $("tasks " + title).append();                                                               
+              $("#new-deliverable").val("<li><input type='checkbox'>" + $("#new-deliverable).val() + "</li>");
               $(this).dialog("close");
            },
            "Cancel":function(){
@@ -69,9 +89,10 @@
           buttons:{
             "Add new task" :function(){
                 var taskName = $("#new-task").val();
-                $("<li><a href='#" + taskName + "'>" + taskName + "</a></li>")
+                var replaceName = taskName.split(" ").join("_");
+                $("<li><a href='#" + replaceName + "'>" + taskName + "</a>span class='ui-icon ui-icon-close'></span></li>")
                 .appendTo("#main");
-                $("<ol id='" + taskName + "'></ol>").appendTo(#"tasks");
+                $("<ol id='" + replaceName + "'></ol>").appendTo(#"tasks").sortable();
                 $("#tasks").tabs("refresh");
                 var tabCount = $("#tasks .ui-tabs-nav li").length;
                 $("#tasks").tabs("option", "active", tabCount-1);
@@ -88,14 +109,11 @@
 <body>
   <div id="container">
     <h2>To Do List</h2>
-    <button id="btnAddTask"</button>
-    {
-      margin-left: 550px;
-    }
-    <div id="deliverables">
+    <button id="btnAddTask">Add Task</button>
+    <div id="tasks">
       <ul id="main">
-        <li><a href="#addTasks">Add Tasks</a></li>
-        <li><a href="#modTasks">Modify Tasks</a></li>
+        <li><a href="#addTasks">Add Tasks</a><span class="ui-icon ui-icon-close"></span></li>
+        <li><a href="#modTasks">Modify Tasks</a>span class="ui-icon ui-icon-close"></span></li>
       </ul>
       <ol id="addTasks">
         <li><input type="checkbox">Add Deliverable</li>
