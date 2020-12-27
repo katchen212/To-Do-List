@@ -12,7 +12,8 @@
            },
            "Cancel":function(){
              $("new-deliverable").val("");
-             $(this).dialog("close");                
+             $(this).dialog("close");    
+          }
        });
     });
     $("btnAddTask").button();
@@ -34,5 +35,6 @@
             "Cancel":function(){
               $("#new-task").val("");
               $(this).dialog("close");
+           }
        });
   });
